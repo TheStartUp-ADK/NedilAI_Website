@@ -124,26 +124,28 @@ export default function Home() {
               transition={{ duration: 0.5 }}
             >
               <span className="text-sm font-medium text-primary-accent uppercase tracking-wider">
-                AI-Powered Real-Time Translator
+                AI that speaks for you in any language
               </span>
             </motion.div>
-            
+
             <motion.h1
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight tracking-tight"
+              className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 leading-tight tracking-tight space-y-1 sm:space-y-2"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
             >
-              Your live AI interpreter that breaks language barriers
+              <span className="block">You speak your language.</span>
+              <span className="block">They hear theirs.</span>
+              <span className="block">NedilAI translates both sides live.</span>
             </motion.h1>
-            
+
             <motion.p
               className="text-lg sm:text-xl lg:text-2xl text-gray-400 mb-12 max-w-3xl mx-auto leading-relaxed"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              Brief your AI, confirm intent, then let it lead live conversations in any language. Real-time two-way translation, on-the-fly interventions, and instant summaries.
+              You tell NedilAI what you want to achieve. It checks it has understood you, then speaks on your behalf in the other person's language – translating both sides, respecting local culture, and gives a clear summary at the end.
             </motion.p>
           </div>
 
@@ -207,26 +209,26 @@ export default function Home() {
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-4xl sm:text-5xl font-bold text-center mb-16">
-            Speak naturally. NedilAI handles the rest.
+            Not just another translator app
           </h2>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
             {[
               {
-                title: "Live two-way voice translation",
-                description: "Real-time speech translation in both directions. Speak naturally in your language while your conversation partner hears everything in theirs, and vice versa.",
+                title: "An interpreter that knows your goal",
+                description: "You don't just translate sentences. You explain your task once (check into a hotel, see a doctor, buy something important), and NedilAI keeps that goal in mind for the whole conversation.",
               },
               {
-                title: "AI-crafted openings",
-                description: "NedilAI generates contextually appropriate conversation starters based on your brief, ensuring smooth and natural openings every time.",
+                title: "Guided, respectful openings",
+                description: "NedilAI opens the conversation for you with the right tone for the situation and culture – like a polite local helping you speak, not a robot reading text.",
               },
               {
                 title: "On-the-fly interventions",
-                description: "Steer the dialog anytime. Interrupt, redirect, or clarify in real-time—you stay in control of the conversation flow.",
+                description: "At any moment you can step in: ask it to slow down, clarify, be firmer, be softer, or ask a new question. You stay in control; NedilAI does the talking.",
               },
               {
-                title: "Conversation summaries & history",
-                description: "Never miss details. After each conversation, receive concise summaries and full history so you can track outcomes and follow up effectively.",
+                title: "Clear summaries, not just transcripts",
+                description: "After the conversation, you get an easy-to-read summary, key decisions, and important details – so you don't have to scroll through long chat logs.",
               },
             ].map((feature, index) => (
               <motion.div
@@ -240,6 +242,51 @@ export default function Home() {
               >
                 <h3 className="text-2xl font-semibold mb-4">{feature.title}</h3>
                 <p className="text-gray-300 leading-relaxed">{feature.description}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Why it feels simple for anyone */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-card-glass/20 to-transparent">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-4xl sm:text-5xl font-bold text-center mb-4">
+            Made for everyone.  
+          </h2>
+          <p className="text-lg text-gray-300 text-center mb-12 max-w-2xl mx-auto">
+            NedilAI is designed so anyone can use it comfortably.
+            Explain what you need, and NedilAI guides rest of the conversation.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+            {[
+              {
+                title: "Simple flow",
+                description: "Describe what you need, choose who you're talking to, then let NedilAI speak. No complex menus or setup.",
+              },
+              {
+                title: "Speak, don't type",
+                description: "You can talk to NedilAI in your own language. It listens, and turns it into clear speech for the other person.",
+              },
+              {
+                title: "Clear on-screen guidance",
+                description: "Step-by-step screens make it easy to see what's happening at each stage of the conversation.",
+              },
+              {
+                title: "You stay in control",
+                description: "At any point you can pause, correct, or change what NedilAI says — so you can feel safe letting it speak.",
+              },
+            ].map((item, index) => (
+              <motion.div
+                key={item.title}
+                className="glass p-6 rounded-2xl h-full"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: index * 0.1 }}
+              >
+                <h3 className="text-xl font-semibold mb-3">{item.title}</h3>
+                <p className="text-gray-300 text-sm leading-relaxed">{item.description}</p>
               </motion.div>
             ))}
           </div>
@@ -286,7 +333,7 @@ export default function Home() {
             Supported languages
           </h2>
           <p className="text-xl text-gray-300 text-center mb-12">
-            Communicate in {LANGUAGES.length} languages and counting
+            {LANGUAGES.length}+ languages and counting
           </p>
           
           <div className="flex flex-wrap gap-3 justify-center">
