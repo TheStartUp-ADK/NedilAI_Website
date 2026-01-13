@@ -4,7 +4,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "NedilAI",
   description:
-    "Break language barriers with NedilAI. Brief your AI, confirm intent, and let it lead live conversations in any language with real-time translation.",
+    "Break language barriers with NedilAI, The AI-Powered Real-Time Translator",
   icons: {
     icon: "/favicon.svg",
   },
