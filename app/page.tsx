@@ -216,7 +216,7 @@ export default function Home() {
             {[
               {
                 title: "An interpreter that knows your goal",
-                description: "You don't just translate sentences. You explain your task once (check into a hotel, see a doctor, buy something important), and NedilAI keeps that goal in mind for the whole conversation.",
+                description: "Explain your task once (check into a hotel, see a doctor, buy something important), and NedilAI keeps that goal in mind for the whole conversation.",
               },
               {
                 title: "Guided, respectful openings",
