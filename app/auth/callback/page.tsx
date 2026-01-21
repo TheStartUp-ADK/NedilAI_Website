@@ -65,6 +65,7 @@ export default function AuthCallback() {
         const type = (queryParams.get("type") || hashParams.get("type")) as AuthType;
         const accessToken = hashParams.get("access_token");
         const refreshToken = hashParams.get("refresh_token");
+        const tokenHash = hashParams.get("token_hash") || queryParams.get("token_hash");
         const errorDescription = hashParams.get("error_description") || queryParams.get("error_description");
 
         // Check for errors first
@@ -78,21 +79,77 @@ export default function AuthCallback() {
           return;
         }
 
-        // If we have tokens, set the session
-        if (accessToken && refreshToken) {
-          const supabase = getSupabase();
-          if (!supabase) {
+        const supabase = getSupabase();
+        if (!supabase) {
+          setAuthState({
+            type,
+            loading: false,
+            error: "Authentication service is not configured.",
+            success: false,
+          });
+          return;
+        }
+
+        // For signup confirmation, if we have a token_hash, use verifyOtp
+        // This is the proper way to confirm email in Supabase
+        if (type === "signup" && tokenHash) {
+          const { data: verifyData, error: verifyError } = await supabase.auth.verifyOtp({
+            token_hash: tokenHash,
+            type: 'signup',
+          });
+
+          if (verifyError) {
             setAuthState({
               type,
               loading: false,
-              error: "Authentication service is not configured.",
+              error: verifyError.message,
               success: false,
             });
             return;
           }
-          
-          // Set the session with the confirmation tokens
-          // When tokens are from a confirmation link, setSession should automatically confirm the email
+
+          // Verify email is confirmed
+          if (verifyData.user) {
+            // Wait a moment for confirmation to process
+            await new Promise(resolve => setTimeout(resolve, 500));
+            
+            const { data: { user }, error: userError } = await supabase.auth.getUser();
+            
+            if (userError || !user) {
+              setAuthState({
+                type,
+                loading: false,
+                error: userError?.message || "Unable to verify user.",
+                success: false,
+              });
+              return;
+            }
+
+            // Check if email is confirmed
+            if (!user.email_confirmed_at) {
+              setAuthState({
+                type,
+                loading: false,
+                error: "Email confirmation failed. Please try the link again or contact support.",
+                success: false,
+              });
+              return;
+            }
+
+            // Success - email is confirmed
+            setAuthState({
+              type,
+              loading: false,
+              error: null,
+              success: true,
+            });
+            return;
+          }
+        }
+
+        // If we have tokens (from redirect after verification), set the session
+        if (accessToken && refreshToken) {
+          // Set the session with the tokens
           const { data: sessionData, error: sessionError } = await supabase.auth.setSession({
             access_token: accessToken,
             refresh_token: refreshToken,
@@ -108,10 +165,9 @@ export default function AuthCallback() {
             return;
           }
 
-          // For signup type, CRITICAL: verify the email confirmation was successful
-          // This is essential - the backend requires email confirmation for sign-in
+          // For signup type, verify the email confirmation was successful
           if (type === "signup") {
-            // Wait a brief moment for Supabase to process the confirmation
+            // Wait a moment for Supabase to process
             await new Promise(resolve => setTimeout(resolve, 1000));
             
             // Get the current user to verify email is confirmed
@@ -128,28 +184,16 @@ export default function AuthCallback() {
             }
 
             // CRITICAL CHECK: Verify email_confirmed_at is set
-            // Without this, the user cannot sign in from the mobile app
             if (user) {
               if (!user.email_confirmed_at) {
-                // Email is not confirmed - try refreshing the session
-                const { error: refreshError } = await supabase.auth.refreshSession();
-                
-                // Wait again after refresh
-                await new Promise(resolve => setTimeout(resolve, 500));
-                
-                // Check again
-                const { data: { user: refreshedUser } } = await supabase.auth.getUser();
-                
-                if (!refreshedUser || !refreshedUser.email_confirmed_at) {
-                  // Email still not confirmed - show error
-                  setAuthState({
-                    type,
-                    loading: false,
-                    error: "Email confirmation failed. The confirmation link may have expired or been used already. Please try signing up again or contact support.",
-                    success: false,
-                  });
-                  return;
-                }
+                // Email is not confirmed - this is a problem
+                setAuthState({
+                  type,
+                  loading: false,
+                  error: "Email confirmation failed. The confirmation link may have expired. Please try signing up again.",
+                  success: false,
+                });
+                return;
               }
               
               // Email is confirmed - success!
