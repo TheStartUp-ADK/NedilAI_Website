@@ -6,12 +6,34 @@ import { createClient, SupabaseClient } from "@supabase/supabase-js";
 import Link from "next/link";
 
 // Lazy initialize Supabase client
+// Use a singleton pattern to ensure we only create one client instance
+let supabaseClient: SupabaseClient | null = null;
+
 function getSupabase(): SupabaseClient | null {
   if (typeof window === "undefined") return null;
+  
+  // Return cached client if available
+  if (supabaseClient) return supabaseClient;
+  
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  if (!supabaseUrl || !supabaseAnonKey) return null;
-  return createClient(supabaseUrl, supabaseAnonKey);
+  
+  if (!supabaseUrl || !supabaseAnonKey) {
+    console.error('Supabase environment variables are not configured');
+    return null;
+  }
+  
+  // Create client with proper configuration for JWT verification
+  supabaseClient = createClient(supabaseUrl, supabaseAnonKey, {
+    auth: {
+      autoRefreshToken: true,
+      persistSession: false, // We're handling the session manually
+      detectSessionInUrl: false, // We're manually parsing the URL
+      flowType: 'pkce', // Use PKCE flow for better security
+    },
+  });
+  
+  return supabaseClient;
 }
 
 type AuthType = "signup" | "recovery" | "email_change" | "magiclink" | null;
@@ -93,57 +115,93 @@ export default function AuthCallback() {
         // For signup confirmation, if we have a token_hash, use verifyOtp
         // This is the proper way to confirm email in Supabase
         if (type === "signup" && tokenHash) {
-          const { data: verifyData, error: verifyError } = await supabase.auth.verifyOtp({
-            token_hash: tokenHash,
-            type: 'signup',
-          });
-
-          if (verifyError) {
-            setAuthState({
-              type,
-              loading: false,
-              error: verifyError.message,
-              success: false,
+          try {
+            const { data: verifyData, error: verifyError } = await supabase.auth.verifyOtp({
+              token_hash: tokenHash,
+              type: 'signup',
             });
-            return;
-          }
 
-          // Verify email is confirmed
-          if (verifyData.user) {
-            // Wait a moment for confirmation to process
-            await new Promise(resolve => setTimeout(resolve, 500));
-            
-            const { data: { user }, error: userError } = await supabase.auth.getUser();
-            
-            if (userError || !user) {
+            if (verifyError) {
+              // Check if it's a JWT verification error
+              if (verifyError.message?.includes('JWT') || verifyError.message?.includes('kid')) {
+                setAuthState({
+                  type,
+                  loading: false,
+                  error: "Email confirmation link is invalid or expired. Please request a new confirmation email.",
+                  success: false,
+                });
+                return;
+              }
+              
               setAuthState({
                 type,
                 loading: false,
-                error: userError?.message || "Unable to verify user.",
+                error: verifyError.message,
                 success: false,
               });
               return;
             }
 
-            // Check if email is confirmed
-            if (!user.email_confirmed_at) {
+            // Verify email is confirmed
+            if (verifyData.user) {
+              // Wait a moment for confirmation to process
+              await new Promise(resolve => setTimeout(resolve, 500));
+              
+              const { data: { user }, error: userError } = await supabase.auth.getUser();
+              
+              if (userError || !user) {
+                // Check if it's a JWT verification error
+                if (userError?.message?.includes('JWT') || userError?.message?.includes('kid')) {
+                  setAuthState({
+                    type,
+                    loading: false,
+                    error: "Session verification failed. Please try signing in again.",
+                    success: false,
+                  });
+                  return;
+                }
+                
+                setAuthState({
+                  type,
+                  loading: false,
+                  error: userError?.message || "Unable to verify user.",
+                  success: false,
+                });
+                return;
+              }
+
+              // Check if email is confirmed
+              if (!user.email_confirmed_at) {
+                setAuthState({
+                  type,
+                  loading: false,
+                  error: "Email confirmation failed. Please try the link again or contact support.",
+                  success: false,
+                });
+                return;
+              }
+
+              // Success - email is confirmed
               setAuthState({
                 type,
                 loading: false,
-                error: "Email confirmation failed. Please try the link again or contact support.",
+                error: null,
+                success: true,
+              });
+              return;
+            }
+          } catch (err: any) {
+            // Handle unexpected errors, especially JWT-related
+            if (err?.message?.includes('JWT') || err?.message?.includes('kid')) {
+              setAuthState({
+                type,
+                loading: false,
+                error: "Email confirmation link is invalid or expired. Please request a new confirmation email.",
                 success: false,
               });
               return;
             }
-
-            // Success - email is confirmed
-            setAuthState({
-              type,
-              loading: false,
-              error: null,
-              success: true,
-            });
-            return;
+            throw err; // Re-throw if it's not a JWT error
           }
         }
 
@@ -156,6 +214,17 @@ export default function AuthCallback() {
           });
 
           if (sessionError) {
+            // Check if it's a JWT verification error
+            if (sessionError.message?.includes('JWT') || sessionError.message?.includes('kid') || sessionError.message?.includes('unverifiable')) {
+              setAuthState({
+                type,
+                loading: false,
+                error: "The confirmation link is invalid or expired. Please request a new confirmation email from the app.",
+                success: false,
+              });
+              return;
+            }
+            
             setAuthState({
               type,
               loading: false,
@@ -174,6 +243,17 @@ export default function AuthCallback() {
             const { data: { user }, error: userError } = await supabase.auth.getUser();
             
             if (userError) {
+              // Check if it's a JWT verification error
+              if (userError.message?.includes('JWT') || userError.message?.includes('kid') || userError.message?.includes('unverifiable')) {
+                setAuthState({
+                  type,
+                  loading: false,
+                  error: "Session verification failed. The confirmation link may have expired. Please request a new confirmation email.",
+                  success: false,
+                });
+                return;
+              }
+              
               setAuthState({
                 type,
                 loading: false,
