@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 
 const LANGUAGES = [
@@ -24,6 +26,32 @@ const PlayStoreIcon = () => (
 );
 
 export default function Home() {
+  const router = useRouter();
+
+  // Check if there are auth tokens in the URL (from email confirmation)
+  // If so, redirect to the callback page
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const hash = window.location.hash;
+      const search = window.location.search;
+      
+      // Check if there are auth-related parameters
+      const hasAuthParams = 
+        hash.includes("access_token") || 
+        hash.includes("token_hash") || 
+        hash.includes("type=") ||
+        search.includes("access_token") ||
+        search.includes("token_hash") ||
+        search.includes("type=");
+      
+      if (hasAuthParams) {
+        // Redirect to callback page with the same hash/query params
+        const redirectUrl = `/auth/callback${search}${hash}`;
+        router.replace(redirectUrl);
+      }
+    }
+  }, [router]);
+
   const scrollToSection = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
