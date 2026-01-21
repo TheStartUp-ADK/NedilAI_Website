@@ -91,7 +91,9 @@ export default function AuthCallback() {
             return;
           }
           
-          const { error: sessionError } = await supabase.auth.setSession({
+          // Set the session with the confirmation tokens
+          // When tokens are from a confirmation link, setSession should automatically confirm the email
+          const { data: sessionData, error: sessionError } = await supabase.auth.setSession({
             access_token: accessToken,
             refresh_token: refreshToken,
           });
@@ -105,6 +107,69 @@ export default function AuthCallback() {
             });
             return;
           }
+
+          // For signup type, CRITICAL: verify the email confirmation was successful
+          // This is essential - the backend requires email confirmation for sign-in
+          if (type === "signup") {
+            // Wait a brief moment for Supabase to process the confirmation
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            // Get the current user to verify email is confirmed
+            const { data: { user }, error: userError } = await supabase.auth.getUser();
+            
+            if (userError) {
+              setAuthState({
+                type,
+                loading: false,
+                error: userError.message,
+                success: false,
+              });
+              return;
+            }
+
+            // CRITICAL CHECK: Verify email_confirmed_at is set
+            // Without this, the user cannot sign in from the mobile app
+            if (user) {
+              if (!user.email_confirmed_at) {
+                // Email is not confirmed - try refreshing the session
+                const { error: refreshError } = await supabase.auth.refreshSession();
+                
+                // Wait again after refresh
+                await new Promise(resolve => setTimeout(resolve, 500));
+                
+                // Check again
+                const { data: { user: refreshedUser } } = await supabase.auth.getUser();
+                
+                if (!refreshedUser || !refreshedUser.email_confirmed_at) {
+                  // Email still not confirmed - show error
+                  setAuthState({
+                    type,
+                    loading: false,
+                    error: "Email confirmation failed. The confirmation link may have expired or been used already. Please try signing up again or contact support.",
+                    success: false,
+                  });
+                  return;
+                }
+              }
+              
+              // Email is confirmed - success!
+              setAuthState({
+                type,
+                loading: false,
+                error: null,
+                success: true,
+              });
+              return;
+            } else {
+              setAuthState({
+                type,
+                loading: false,
+                error: "Unable to verify user. Please try again.",
+                success: false,
+              });
+              return;
+            }
+          }
         }
 
         // Handle different auth types
@@ -116,8 +181,8 @@ export default function AuthCallback() {
             error: null,
             success: false,
           });
-        } else if (type === "signup" || type === "email_change") {
-          // Email confirmation - show success
+        } else if (type === "email_change") {
+          // Email change confirmation - show success
           setAuthState({
             type,
             loading: false,
