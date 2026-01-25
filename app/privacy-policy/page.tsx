@@ -30,7 +30,7 @@ export default function PrivacyPolicy() {
             transition={{ duration: 0.5 }}
           >
             <h1 className="text-4xl sm:text-5xl font-bold mb-4">Privacy Policy</h1>
-            <p className="text-gray-400 mb-8">Last Updated: January 24, 2025</p>
+            <p className="text-gray-400 mb-8">Last Updated: January 25, 2026</p>
 
             <div className="glass glass-glow p-8 rounded-2xl space-y-8 prose prose-invert max-w-none">
               <section>
@@ -184,9 +184,10 @@ export default function PrivacyPolicy() {
                   <li><strong>Conversation History</strong>: Stored until you delete your account or individual conversations</li>
                   <li><strong>Audio Recordings</strong>: Processed in real-time and not permanently stored (only transcriptions are saved)</li>
                   <li><strong>Usage Data</strong>: Retained for quota management purposes</li>
+                  <li><strong>Deleted Account Emails</strong>: Email addresses are hashed (SHA256) and stored for 30 days after account deletion to prevent immediate re-registration, then automatically removed</li>
                 </ul>
                 <p className="text-gray-300 leading-relaxed mt-4">
-                  You can delete your account at any time, which will permanently delete all associated data. Signing out will clear all locally stored authentication tokens.
+                  You can delete your account at any time directly from the app (Settings → Delete Account), which will permanently delete all associated data. Signing out will clear all locally stored authentication tokens.
                 </p>
               </section>
 
@@ -222,9 +223,22 @@ export default function PrivacyPolicy() {
                 <h3 className="text-xl font-semibold mb-3 mt-6">7.2 Deletion Rights</h3>
                 <ul className="list-disc list-inside text-gray-300 space-y-2 ml-4">
                   <li><strong>Delete Conversations</strong>: Remove individual conversations from your history</li>
-                  <li><strong>Delete Account</strong>: Delete your entire account and all associated data by contacting support</li>
+                  <li><strong>Delete Account</strong>: Delete your entire account and all associated data directly from the app (Settings → Delete Account) or by contacting support</li>
                   <li><strong>Right to be Forgotten</strong>: Request complete deletion of your personal data</li>
                 </ul>
+                <p className="text-gray-300 leading-relaxed mt-4 mb-3"><strong>Account Deletion Process:</strong></p>
+                <ul className="list-disc list-inside text-gray-300 space-y-2 ml-4">
+                  <li>You can delete your account directly from the app by going to Settings → Delete Account</li>
+                  <li>Account deletion requires email verification via OTP code for security</li>
+                  <li>All your account data, conversations, messages, and profile information will be permanently deleted</li>
+                  <li>Your email address will be hashed (using SHA256) and stored for 30 days to prevent immediate re-registration</li>
+                  <li>After 30 days, the email hash is automatically removed from our system</li>
+                  <li>During the 30-day period, your email cannot be used to create a new account</li>
+                  <li>If you need to remove the 30-day email restriction, contact support at <a href="mailto:support@nedilai.com" className="text-primary-accent hover:underline">support@nedilai.com</a></li>
+                </ul>
+                <p className="text-gray-300 leading-relaxed mt-4">
+                  <strong>Important:</strong> Account deletion is permanent and cannot be undone. All your data will be permanently removed from our systems.
+                </p>
 
                 <h3 className="text-xl font-semibold mb-3 mt-6">7.3 GDPR Rights (European Users)</h3>
                 <p className="text-gray-300 leading-relaxed mb-3">If you are located in the European Economic Area (EEA), you have additional rights:</p>

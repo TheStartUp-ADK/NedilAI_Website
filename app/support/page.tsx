@@ -174,7 +174,7 @@ export default function Support() {
                     <li>Tap the <strong>"Settings"</strong> tab at the bottom</li>
                     <li><strong>Language Settings</strong>: Change your native language preference</li>
                     <li><strong>Voice Settings</strong>: Choose male or female voice for translations</li>
-                    <li><strong>Account</strong>: Sign out</li>
+                    <li><strong>Account</strong>: View your email and audio quota, sign out, or delete account</li>
                     <li><strong>Audio Quota</strong>: View your remaining audio time and reset date</li>
                   </ol>
                 </div>
@@ -261,7 +261,26 @@ export default function Support() {
                 </Accordion>
 
                 <Accordion title="How do I delete my account?">
-                  <p>Contact support at <a href="mailto:support@nedilai.com" className="text-primary-accent hover:underline">support@nedilai.com</a> to request account deletion. We will process your request within 30 days.</p>
+                  <div className="space-y-3">
+                    <p>You can delete your account directly from the app:</p>
+                    <ol className="list-decimal list-inside space-y-2 ml-4">
+                      <li>Go to <strong>Settings</strong></li>
+                      <li>Scroll down to <strong>Account Actions</strong></li>
+                      <li>Tap <strong>"Delete Account"</strong></li>
+                      <li>Enter your email to confirm</li>
+                      <li>Check your email for a verification code (OTP)</li>
+                      <li>Enter the 6-digit code</li>
+                      <li>Re-enter your email one final time to confirm</li>
+                      <li>Confirm the permanent deletion</li>
+                    </ol>
+                    <p className="mt-3"><strong>Important:</strong></p>
+                    <ul className="list-disc list-inside space-y-1 ml-4">
+                      <li>Account deletion is <strong>permanent and cannot be undone</strong></li>
+                      <li>All your data, conversations, and account information will be permanently deleted</li>
+                      <li>Your email will be blocked from creating a new account for 30 days</li>
+                      <li>If you need to remove the 30-day email restriction, contact support at <a href="mailto:support@nedilai.com" className="text-primary-accent hover:underline">support@nedilai.com</a></li>
+                    </ul>
+                  </div>
                 </Accordion>
 
                 <Accordion title="Microphone not working?">
@@ -410,6 +429,37 @@ export default function Support() {
                       <p className="font-semibold text-white mb-2">Delete All Conversations:</p>
                       <p className="ml-4">Go to <strong>History</strong> and tap the <strong>Clear All</strong> button.</p>
                     </div>
+                  </div>
+                </Accordion>
+
+                <Accordion title="Deleting Your Account" defaultOpen={false}>
+                  <div className="space-y-3">
+                    <p className="font-semibold text-white mb-2">How to Delete Your Account:</p>
+                    <ol className="list-decimal list-inside space-y-2 ml-4">
+                      <li>Go to <strong>Settings</strong></li>
+                      <li>Scroll to <strong>Account Actions</strong> section</li>
+                      <li>Tap <strong>"Delete Account"</strong> (below Sign Out)</li>
+                      <li>Enter your email address to confirm</li>
+                      <li>Check your email for a 6-digit verification code</li>
+                      <li>Enter the verification code</li>
+                      <li>Re-enter your email one final time to confirm deletion</li>
+                      <li>Confirm the permanent deletion in the final warning dialog</li>
+                    </ol>
+                    <p className="mt-4 font-semibold text-white mb-2">What Happens When You Delete Your Account:</p>
+                    <ul className="list-disc list-inside space-y-2 ml-4">
+                      <li>All your account data is permanently deleted</li>
+                      <li>All your conversations and messages are permanently deleted</li>
+                      <li>Your profile information is permanently deleted</li>
+                      <li>Your email address is hashed and stored for 30 days to prevent immediate re-registration</li>
+                      <li>After 30 days, the email hash is automatically removed</li>
+                    </ul>
+                    <p className="mt-4 font-semibold text-white mb-2">Email Blocking Period:</p>
+                    <ul className="list-disc list-inside space-y-1 ml-4">
+                      <li>Your email will be blocked from creating a new account for 30 days after deletion</li>
+                      <li>This is a security measure to prevent abuse</li>
+                      <li>If you need to remove this restriction earlier, contact support at <a href="mailto:support@nedilai.com" className="text-primary-accent hover:underline">support@nedilai.com</a></li>
+                    </ul>
+                    <p className="mt-4 text-red-300 font-semibold">⚠️ Warning: Account deletion is permanent and cannot be undone. Make sure you want to delete your account before proceeding.</p>
                   </div>
                 </Accordion>
               </div>
