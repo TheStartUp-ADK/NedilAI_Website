@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 const LANGUAGES = [
   "Tamil", "English", "Spanish", "Japanese", "Chinese", "Korean", "French",
@@ -26,32 +25,6 @@ const PlayStoreIcon = () => (
 );
 
 export default function Home() {
-  const router = useRouter();
-
-  // Check if there are auth tokens in the URL (from email confirmation)
-  // If so, redirect to the callback page
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const hash = window.location.hash;
-      const search = window.location.search;
-      
-      // Check if there are auth-related parameters
-      const hasAuthParams = 
-        hash.includes("access_token") || 
-        hash.includes("token_hash") || 
-        hash.includes("type=") ||
-        search.includes("access_token") ||
-        search.includes("token_hash") ||
-        search.includes("type=");
-      
-      if (hasAuthParams) {
-        // Redirect to callback page with the same hash/query params
-        const redirectUrl = `/auth/callback${search}${hash}`;
-        router.replace(redirectUrl);
-      }
-    }
-  }, [router]);
-
   const scrollToSection = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
@@ -141,7 +114,7 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              You tell NedilAI what you want to achieve. It checks it has understood you, then speaks on your behalf in the other person&apos;s language – translating both sides, respecting local culture, and gives a clear summary at the end.
+              Tell NedilAI what you need. It speaks for you, translates both sides, and gives you a clear summary.
             </motion.p>
           </div>
 
@@ -220,8 +193,8 @@ export default function Home() {
                 description: "Explain your task once (check into a hotel, see a doctor, buy something important), and NedilAI keeps that goal in mind for the whole conversation.",
               },
               {
-                title: "Guided, respectful openings",
-                description: "NedilAI opens the conversation for you with the right tone for the situation and culture – like a polite local helping you speak, not a robot reading text.",
+                title: "Cultural tips as you go",
+                description: "Get helpful cultural context during conversations – like bargaining tips, local customs, or food recommendations – so you can navigate situations like a local.",
               },
               {
                 title: "On-the-fly interventions",
@@ -266,12 +239,12 @@ export default function Home() {
                 description: "Describe what you need, choose who you're talking to, then let NedilAI speak. No complex menus or setup.",
               },
               {
-                title: "Speak, don't type",
-                description: "You can talk to NedilAI in your own language. It listens, and turns it into clear speech for the other person.",
+                title: "Cultural tips included",
+                description: "Get helpful cultural context during conversations – from bargaining tips to local customs – so you can navigate like a local.",
               },
               {
-                title: "Clear on-screen guidance",
-                description: "Step-by-step screens make it easy to see what's happening at each stage of the conversation.",
+                title: "Speak or type",
+                description: "You can talk to NedilAI in your own language, or type if you prefer. It adapts to how you want to communicate.",
               },
               {
                 title: "You stay in control",
@@ -303,10 +276,10 @@ export default function Home() {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
             {[
-              { step: "1", title: "Brief task", description: "Tell NedilAI what you need to communicate and your goals for the conversation." },
-              { step: "2", title: "AI confirms intent", description: "NedilAI confirms understanding of your brief and clarifies any details needed." },
-              { step: "3", title: "Live translate", description: "Choose your target language. NedilAI opens the conversation and translates both sides in real-time." },
-              { step: "4", title: "Get summary", description: "Intervene anytime to steer the dialog. Afterward, receive concise summaries and full conversation history." },
+              { step: "1", title: "Describe your task", description: "Tell NedilAI what you need help with – like checking into a hotel or ordering food." },
+              { step: "2", title: "AI confirms", description: "NedilAI confirms it understands your goal and asks any clarifying questions if needed." },
+              { step: "3", title: "Choose language", description: "Select who you're talking to. NedilAI opens the conversation and translates both sides in real-time, with helpful cultural tips along the way." },
+              { step: "4", title: "Get summary", description: "Intervene anytime to guide the conversation. Afterward, get a clear summary with key decisions and important details." },
             ].map((item, index) => (
               <motion.div
                 key={index}
@@ -416,8 +389,19 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="py-8 px-4 sm:px-6 lg:px-8 border-t border-white/10">
-        <div className="max-w-7xl mx-auto text-center text-gray-400 text-sm">
-          <p>&copy; {new Date().getFullYear()} NedilAI. All rights reserved.</p>
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 text-gray-400 text-sm mb-4">
+            <Link href="/privacy-policy" className="hover:text-white transition-colors">
+              Privacy Policy
+            </Link>
+            <span className="hidden sm:inline">•</span>
+            <Link href="/support" className="hover:text-white transition-colors">
+              Support
+            </Link>
+          </div>
+          <p className="text-center text-gray-400 text-sm">
+            &copy; {new Date().getFullYear()} NedilAI. All rights reserved.
+          </p>
         </div>
       </footer>
     </main>
