@@ -78,7 +78,7 @@ export default function Support() {
               >
                 support@nedilai.com
               </a>
-              <p className="text-sm text-gray-400 mt-2">We typically respond within 24-48 hours</p>
+              <p className="text-sm text-gray-400 mt-2">We respond within 24-48 hours</p>
             </div>
 
             {/* Getting Started */}
@@ -174,7 +174,7 @@ export default function Support() {
                     <li>Tap the <strong>"Settings"</strong> tab at the bottom</li>
                     <li><strong>Language Settings</strong>: Change your native language preference</li>
                     <li><strong>Voice Settings</strong>: Choose male or female voice for translations</li>
-                    <li><strong>Account</strong>: Update your name or sign out</li>
+                    <li><strong>Account</strong>: Sign out</li>
                     <li><strong>Audio Quota</strong>: View your remaining audio time and reset date</li>
                   </ol>
                 </div>
@@ -261,7 +261,7 @@ export default function Support() {
                 </Accordion>
 
                 <Accordion title="How do I delete my account?">
-                  <p>Contact support at <a href="mailto:support@nedilai.com" className="text-primary-accent hover:underline">support@nedilai.com</a> to request account deletion. Include your email address and request account deletion. We will process your request within 30 days.</p>
+                  <p>Contact support at <a href="mailto:support@nedilai.com" className="text-primary-accent hover:underline">support@nedilai.com</a> to request account deletion. We will process your request within 30 days.</p>
                 </Accordion>
 
                 <Accordion title="Microphone not working?">
@@ -408,7 +408,7 @@ export default function Support() {
                     </div>
                     <div>
                       <p className="font-semibold text-white mb-2">Delete All Conversations:</p>
-                      <p className="ml-4">Go to <strong>History</strong> and tap the <strong>Clear All</strong> button to delete all conversations at once.</p>
+                      <p className="ml-4">Go to <strong>History</strong> and tap the <strong>Clear All</strong> button.</p>
                     </div>
                   </div>
                 </Accordion>
@@ -448,7 +448,7 @@ export default function Support() {
                   <ul className="list-disc list-inside text-gray-300 space-y-2 ml-4">
                     <li><strong>Internet Connection</strong>: Required for all features</li>
                     <li><strong>Connection Type</strong>: Wi-Fi or mobile data (4G/5G)</li>
-                    <li><strong>Bandwidth</strong>: Minimum recommended for smooth operation</li>
+                    <li><strong>Bandwidth</strong>: Stable connection recommended</li>
                     <li><strong>HTTPS</strong>: All data transmission uses secure HTTPS</li>
                   </ul>
                 </div>
@@ -478,14 +478,14 @@ export default function Support() {
                   >
                     support@nedilai.com
                   </a>
-                  <p className="text-sm text-gray-400 mt-2">We aim to respond within 24-48 hours during business days.</p>
+                  <p className="text-sm text-gray-400 mt-2">We respond within 24-48 hours.</p>
                   
                   <p className="text-gray-300 mt-4 mb-2"><strong>What to Include:</strong></p>
                   <ul className="list-disc list-inside text-gray-300 space-y-1 ml-4">
-                    <li>Your email address (if different from the one you're contacting from)</li>
+                    <li>Your email address</li>
                     <li>Description of the issue</li>
-                    <li>Steps to reproduce the problem (if applicable)</li>
-                    <li>Screenshots (if helpful)</li>
+                    <li>Steps to reproduce the problem</li>
+                    <li>Screenshots</li>
                     <li>Device information (iOS/Android, device model, app version)</li>
                   </ul>
                 </div>

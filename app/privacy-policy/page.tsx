@@ -173,7 +173,7 @@ export default function PrivacyPolicy() {
                 <h3 className="text-xl font-semibold mb-3 mt-6">5.3 Local Device Storage</h3>
                 <ul className="list-disc list-inside text-gray-300 space-y-2 ml-4">
                   <li><strong>Authentication Tokens</strong>: Stored locally on your device using secure storage (AsyncStorage on native platforms, localStorage on web)</li>
-                  <li><strong>Purpose</strong>: Tokens are stored locally to maintain your login session and avoid requiring you to sign in repeatedly</li>
+                  <li><strong>Purpose</strong>: Tokens are stored locally to maintain your login session</li>
                   <li><strong>Security</strong>: Tokens are automatically cleared when you sign out</li>
                   <li><strong>No Sensitive Data</strong>: Passwords are never stored locally - only secure authentication tokens</li>
                 </ul>
@@ -215,7 +215,7 @@ export default function PrivacyPolicy() {
                 <h3 className="text-xl font-semibold mb-3 mt-6">7.1 Access and Correction</h3>
                 <ul className="list-disc list-inside text-gray-300 space-y-2 ml-4">
                   <li><strong>View Your Data</strong>: Access your profile, conversation history, and settings through the app</li>
-                  <li><strong>Update Information</strong>: Modify your name, language preferences, and other profile settings in Settings</li>
+                  <li><strong>Update Information</strong>: Modify your language preferences and other profile settings in Settings</li>
                   <li><strong>Download Data</strong>: Request a copy of your data by contacting support</li>
                 </ul>
 
@@ -264,10 +264,10 @@ export default function PrivacyPolicy() {
                   Your information may be transferred to and processed in countries other than your country of residence. These countries may have data protection laws that differ from those in your country. By using Nedil AI, you consent to the transfer of your information to:
                 </p>
                 <ul className="list-disc list-inside text-gray-300 space-y-2 ml-4">
-                  <li><strong>Supabase</strong>: Servers located in various regions (you can choose your region)</li>
+                  <li><strong>Supabase</strong>: Servers located in various regions</li>
                   <li><strong>OpenAI</strong>: Servers in the United States and other locations</li>
                   <li><strong>ElevenLabs</strong>: Servers in the United States and other locations</li>
-                  <li><strong>Resend</strong>: Servers in the United States and other locations (for email delivery)</li>
+                  <li><strong>Resend</strong>: Servers in the United States and other locations</li>
                 </ul>
                 <p className="text-gray-300 leading-relaxed mt-4">
                   We ensure that appropriate safeguards are in place to protect your data during international transfers.
