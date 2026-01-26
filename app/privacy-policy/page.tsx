@@ -187,7 +187,7 @@ export default function PrivacyPolicy() {
                   <li><strong>Deleted Account Emails</strong>: Email addresses are hashed (SHA256) and stored for 30 days after account deletion to prevent immediate re-registration, then automatically removed</li>
                 </ul>
                 <p className="text-gray-300 leading-relaxed mt-4">
-                  You can delete your account at any time directly from the app (Settings → Delete Account), which will permanently delete all associated data. Signing out will clear all locally stored authentication tokens.
+                  You can delete your account at any time directly from the app (Settings → Delete Account), which will permanently delete all account data, conversations, messages, and profile information immediately. Your email address will be hashed (SHA256) and stored for 30 days for security purposes, then automatically removed. Signing out will clear all locally stored authentication tokens.
                 </p>
               </section>
 
@@ -237,7 +237,7 @@ export default function PrivacyPolicy() {
                   <li>If you need to remove the 30-day email restriction, contact support at <a href="mailto:support@nedilai.com" className="text-primary-accent hover:underline">support@nedilai.com</a></li>
                 </ul>
                 <p className="text-gray-300 leading-relaxed mt-4">
-                  <strong>Important:</strong> Account deletion is permanent and cannot be undone. All your data will be permanently removed from our systems.
+                  <strong>Important:</strong> Account deletion is permanent and cannot be undone. All your account data, conversations, messages, and profile information will be permanently deleted immediately. Your email address will be hashed (SHA256) and stored for 30 days for security purposes to prevent immediate re-registration, then automatically removed. The email hash cannot be reversed to reveal your original email address.
                 </p>
 
                 <h3 className="text-xl font-semibold mb-3 mt-6">7.3 GDPR Rights (European Users)</h3>
