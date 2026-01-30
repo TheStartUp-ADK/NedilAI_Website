@@ -126,21 +126,18 @@ export default function Home() {
           >
             {/* Download Buttons */}
             <div className="flex flex-col sm:flex-row gap-4">
-              <div className="relative group">
-                <button
-                  disabled
-                  className="flex items-center gap-3 px-6 py-4 glass rounded-xl opacity-60 cursor-not-allowed transition-all duration-200"
-                >
-                  <AppStoreIcon />
-                  <div className="text-left">
-                    <div className="text-xs text-gray-400">Download on the</div>
-                    <div className="text-lg font-semibold">App Store</div>
-                  </div>
-                </button>
-                <span className="absolute -top-2 -right-2 px-2 py-1 bg-primary-accent text-xs font-medium rounded-full">
-                  Coming Soon
-                </span>
-              </div>
+              <a
+                href="https://apps.apple.com/us/app/nedil-ai/id6757962583"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 px-6 py-4 glass rounded-xl hover:bg-white/10 transition-all duration-200"
+              >
+                <AppStoreIcon />
+                <div className="text-left">
+                  <div className="text-xs text-gray-400">Download now on</div>
+                  <div className="text-lg font-semibold">App Store</div>
+                </div>
+              </a>
               
               <div className="relative group">
                 <button
@@ -335,30 +332,25 @@ export default function Home() {
             Ready to break language barriers?
           </h2>
           <p className="text-xl text-gray-300 mb-10">
-            NedilAI is launching soon on iOS and Android. Be ready to experience seamless multilingual conversations.
+            NedilAI is available on iOS now, with Android coming soon. Experience seamless multilingual conversations.
           </p>
           
           {/* Download Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-            <motion.div 
-              className="relative"
+            <motion.a
+              href="https://apps.apple.com/us/app/nedil-ai/id6757962583"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="relative flex items-center gap-3 px-8 py-5 glass rounded-xl hover:bg-white/10 transition-all duration-200 w-full sm:w-auto justify-center"
               whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.2 }}
             >
-              <button
-                disabled
-                className="flex items-center gap-3 px-8 py-5 glass rounded-xl opacity-60 cursor-not-allowed transition-all duration-200 w-full sm:w-auto justify-center"
-              >
-                <AppStoreIcon />
-                <div className="text-left">
-                  <div className="text-xs text-gray-400">Download on the</div>
-                  <div className="text-lg font-semibold">App Store</div>
-                </div>
-              </button>
-              <span className="absolute -top-2 -right-2 px-3 py-1 bg-primary-accent text-xs font-medium rounded-full shadow-lg">
-                Coming Soon
-              </span>
-            </motion.div>
+              <AppStoreIcon />
+              <div className="text-left">
+                <div className="text-xs text-gray-400">Download now on</div>
+                <div className="text-lg font-semibold">App Store</div>
+              </div>
+            </motion.a>
             
             <motion.div 
               className="relative"
@@ -382,7 +374,7 @@ export default function Home() {
           </div>
           
           <p className="text-sm text-gray-400">
-            Available for iOS and Android devices. Stay tuned for the official launch.
+            Available now on iOS. Android coming soon.
           </p>
         </div>
       </section>

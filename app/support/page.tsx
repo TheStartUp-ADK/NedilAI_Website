@@ -89,7 +89,7 @@ export default function Support() {
                 <div>
                   <h3 className="text-lg font-semibold mb-2 text-white">Creating Your Account</h3>
                   <ol className="list-decimal list-inside text-gray-300 space-y-2 ml-4">
-                    <li>Download NedilAI from the App Store (iOS) or Google Play Store (Android)</li>
+                    <li>Download NedilAI from the <a href="https://apps.apple.com/us/app/nedil-ai/id6757962583" target="_blank" rel="noopener noreferrer" className="text-primary-accent hover:underline">App Store (iOS)</a> or Google Play Store (Android)</li>
                     <li>Open the app and tap "Sign Up"</li>
                     <li>Enter your email and verify with the OTP code sent to your email</li>
                     <li>Create a password and enter your name</li>
